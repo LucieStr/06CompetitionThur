@@ -28,7 +28,7 @@ public class ZavodnikTest {
         zavodnik.getTime();
         System.out.println("Celkovy cas zavodnika je: "+ zavodnik.getStringTime());
         System.out.println(zavodnik.getStavZavodnika());
-        
+        System.out.println(zavodnik.getVek());
     }
     
 }

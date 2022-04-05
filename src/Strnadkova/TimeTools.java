@@ -4,6 +4,7 @@
  */
 package Strnadkova;
 
+
 /**
  *
  * @author lucka
@@ -33,4 +34,6 @@ public class TimeTools {
         String[] arr = time.split(":", 3);
         return (Integer.parseInt(arr[0])*3600) + (Integer.parseInt(arr[1])*60) + (Integer.parseInt(arr[2]));
     }
+    
+
 }
