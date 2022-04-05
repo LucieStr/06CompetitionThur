@@ -20,14 +20,20 @@ public class Zavodnik {
     private static int pocitadlo = 1;
     private String stavZavodnika;
     private int vek;
+    private String klub;
 
-    public Zavodnik(String jmeno, String prijmeni, int rocnik, char pohlavi) {
+    public Zavodnik(String jmeno, String prijmeni, int rocnik, char pohlavi, String klub) {
         this.jmeno = jmeno;
         this.prijmeni = prijmeni;
         this.rocnik = rocnik;
         this.pohlavi = pohlavi;
+        this.klub = klub;
         this.registracniCislo = pocitadlo;
         Zavodnik.pocitadlo++;
+    }
+
+    public String getKlub() {
+        return klub;
     }
 
     public int getVek() {
@@ -78,11 +84,11 @@ public class Zavodnik {
 
     public String getStavZavodnika() {
         if (this.startTime == 0) {
-            return this.stavZavodnika = "nezahajil zavod";
+            return this.stavZavodnika = "zavod nezahajen";
         } else if (this.startTime != 0 && this.finishTime == 0) {
-            return this.stavZavodnika = "zavodi";
+            return this.stavZavodnika = "zavod neukoncen";
         } else {
-            return this.stavZavodnika = "ukoncil zavod";
+            return this.stavZavodnika = "zavod ukoncen";
         }
     }
 

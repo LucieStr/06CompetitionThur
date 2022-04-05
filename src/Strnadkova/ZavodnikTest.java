@@ -14,7 +14,7 @@ public class ZavodnikTest {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Zavodnik zavodnik = new Zavodnik("Lucie", "Strnadkova", 2002, 'z');
+        Zavodnik zavodnik = new Zavodnik("Lucie", "Strnadkova", 2002, 'z', "nemam");
         System.out.println(zavodnik.getJmeno()+" " + zavodnik.getPrijmeni()+" " + zavodnik.getRocnik()+" " + zavodnik.getPohlavi());
         System.out.println(zavodnik.getStavZavodnika());
         zavodnik.setStartTime(0, 1, 20);
