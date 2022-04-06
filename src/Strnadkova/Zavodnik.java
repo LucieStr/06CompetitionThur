@@ -6,7 +6,6 @@ package Strnadkova;
 
 import java.time.LocalDate;
 
-
 public class Zavodnik {
 
     private String jmeno;
@@ -39,7 +38,7 @@ public class Zavodnik {
     public int getVek() {
         LocalDate current_date = LocalDate.now();
         int year = current_date.getYear();
-        return vek = year - rocnik  ;
+        return vek = year - rocnik;
     }
 
     public int getRegistracniCislo() {
@@ -90,6 +89,10 @@ public class Zavodnik {
         } else {
             return this.stavZavodnika = "zavod ukoncen";
         }
+    }
+
+    public static Zavodnik getInstance(String jmeno, String prijmeni, int rocnik, char pohlavi, String klub) {
+        return new Zavodnik(jmeno, prijmeni, rocnik, pohlavi, klub);
     }
 
     public void setStartTime(int startTime) {
