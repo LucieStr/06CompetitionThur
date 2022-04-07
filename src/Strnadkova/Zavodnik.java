@@ -17,11 +17,11 @@ public class Zavodnik {
     private int time;
     private char pohlavi;
     private static int pocitadlo = 1;
-    private String stavZavodnika;
-    private int vek;
+    //private String stavZavodnika; meni se to, neni potreba davat do promenne
+    //private int vek; //muze byt atribut, ale musi byt nekde metoda, ktera ho bude pocitat
     private String klub;
 
-    public Zavodnik(String jmeno, String prijmeni, int rocnik, char pohlavi, String klub) {
+    public Zavodnik(String jmeno, String prijmeni, int rocnik, char pohlavi, String klub) { //klub muze byt jako setter, aby se pripadne dal nastavit
         this.jmeno = jmeno;
         this.prijmeni = prijmeni;
         this.rocnik = rocnik;
@@ -31,14 +31,24 @@ public class Zavodnik {
         Zavodnik.pocitadlo++;
     }
 
+    //kopie zavodnika, muzeme taky pouzit metodu clone()
+    public Zavodnik(Zavodnik z) {
+        this.jmeno = z.jmeno;
+        this.prijmeni = z.prijmeni;
+        this.rocnik = z.rocnik;
+        this.pohlavi = z.pohlavi;
+        this.klub = z.klub;
+        this.registracniCislo = z.registracniCislo;
+    }
+
     public String getKlub() {
         return klub;
     }
 
     public int getVek() {
-        LocalDate current_date = LocalDate.now();
-        int year = current_date.getYear();
-        return vek = year - rocnik;
+        LocalDate current_date = LocalDate.now(); // tovarni metoda, vytvoreni dnesniho datumu
+        int year = current_date.getYear();    // getYear, vrati rok z datumu
+        return year - rocnik; //bez vek, neni to potreba prirazovat do promenne vek
     }
 
     public int getRegistracniCislo() {
@@ -66,28 +76,27 @@ public class Zavodnik {
     }
 
     public int getTime() {
-        return time = TimeTools.timeCompare(startTime, finishTime);
+        if (getStavZavodnika() == StavZavodnika.UKONCEN) {
+            time = TimeTools.timeCompare(startTime, finishTime);
+        }
+        return time;
     }
 
     public char getPohlavi() {
         return pohlavi;
     }
 
-    public static int getPocitadlo() {
-        return pocitadlo;
-    }
-
     public String getStringTime() {
         return TimeTools.secondsToTime(time);
     }
 
-    public String getStavZavodnika() {
+    public StavZavodnika getStavZavodnika() { // enum 
         if (this.startTime == 0) {
-            return this.stavZavodnika = "zavod nezahajen";
+            return StavZavodnika.NEZAHAJEN; //"zavod nezahajen"
         } else if (this.startTime != 0 && this.finishTime == 0) {
-            return this.stavZavodnika = "zavod neukoncen";
+            return StavZavodnika.NEUKONCEN; //"zavod neukoncen"
         } else {
-            return this.stavZavodnika = "zavod ukoncen";
+            return StavZavodnika.UKONCEN; //"zavod ukoncen" 
         }
     }
 
@@ -119,4 +128,7 @@ public class Zavodnik {
         this.finishTime = TimeTools.timeToSeconds(time);
     }
 
+    public String toString() {
+        return String.format("%5d %10s %10s %5d %4s %10s %10s %10s", this.registracniCislo, this.jmeno, this.prijmeni, this.getVek(), this.pohlavi, TimeTools.secondsToTime(this.startTime), TimeTools.secondsToTime(this.finishTime), TimeTools.secondsToTime(this.getTime()));
+    }
 }

@@ -15,20 +15,22 @@ public class ZavodnikTest {
      */
     public static void main(String[] args) {
         Zavodnik zavodnik = new Zavodnik("Lucie", "Strnadkova", 2002, 'z', "nemam");
-        System.out.println(zavodnik.getJmeno()+" " + zavodnik.getPrijmeni()+" " + zavodnik.getRocnik()+" " + zavodnik.getPohlavi());
-        System.out.println(zavodnik.getStavZavodnika());
+        //System.out.println(zavodnik.toString());
+        //System.out.println(zavodnik.getJmeno()+" " + zavodnik.getPrijmeni()+" " + zavodnik.getRocnik()+" " + zavodnik.getPohlavi());
+        //System.out.println(zavodnik.getStavZavodnika());
         zavodnik.setStartTime(0, 1, 20);
-        System.out.println(zavodnik.getStartTime());
-        System.out.println(zavodnik.getStavZavodnika());
+        //System.out.println(zavodnik.getStartTime());
+        //System.out.println(zavodnik.getStavZavodnika());
         zavodnik.setFinishTime(1, 0, 0);
-        System.out.println(zavodnik.getFinishTime());
-        System.out.println(zavodnik.getTime());
+        //System.out.println(zavodnik.getFinishTime());
+        //System.out.println(zavodnik.getTime());
         zavodnik.setStartTime("0:01:20");
         zavodnik.setFinishTime("1:0:0");
         zavodnik.getTime();
-        System.out.println("Celkovy cas zavodnika je: "+ zavodnik.getStringTime());
-        System.out.println(zavodnik.getStavZavodnika());
-        System.out.println(zavodnik.getVek());
+        //System.out.println("Celkovy cas zavodnika je: "+ zavodnik.getStringTime());
+        //System.out.println(zavodnik.getStavZavodnika());
+        System.out.println(zavodnik.toString());
+        
     }
     
 }

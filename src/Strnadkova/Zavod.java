@@ -4,6 +4,7 @@
  */
 package Strnadkova;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -11,38 +12,48 @@ import java.util.Scanner;
  * @author lucka
  */
 public class Zavod {
-     private Scanner sc =new Scanner(System.in);
-    
+
+    private Scanner sc = new Scanner(System.in);
+
     //data
     private String name;
-    private Zavodnik[] competitors;
-    private int nCompetitors = 0;
-    
+    private ArrayList<Zavodnik> competitors; //
+    //private int nCompetitors = 0;
+
     //konstruktor
-    public Zavod(String name){
+    public Zavod(String name) {
         this.name = name;
-        this.competitors = new Zavodnik[10];
+        this.competitors = new ArrayList<>();
     }
-    
+
     //gettery
     public String getName() {
         return name;
     }
 
-    public Zavodnik[] getCompetitors() {
-        return competitors;
+    public ArrayList<Zavodnik> getCompetitors() { // defensive deep copy
+        ArrayList<Zavodnik> copy = new ArrayList<>();
+        for (Zavodnik zavodnik : competitors) { // musime prochazet puvodni pole
+            //copy.add(zavodnik); // vyrobilo by nove pole, ale ukozovalo na stejne objekty
+            copy.add(new Zavodnik(zavodnik));
+        }
+        return copy;
     }
 
     public int getnCompetitors() {
-        return nCompetitors;
+        return competitors.size();
     }
-    
+
     //methods
-    public void addCompetitors(int number){
-        String name; String surname; int year; char gender; String club;
+    /*public void addCompetitors(int number) { // bude spise v uzivatelskem rozhrani
+        String name;
+        String surname;
+        int year;
+        char gender;
+        String club;
         int prevComp = nCompetitors;
-        for(int i =prevComp;i<number;i++){
-            if (i==competitors.length){
+        for (int i = prevComp; i < number; i++) {
+            if (i == competitors.length) {
                 extendArray();
             }
             System.out.println("Jmeno:");
@@ -55,35 +66,46 @@ public class Zavod {
             gender = sc.next().charAt(0);
             System.out.println("Klub");
             club = sc.next();
-            this.competitors[i]= Zavodnik.getInstance(name, surname, year, gender, club);
+            this.competitors[i] = Zavodnik.getInstance(name, surname, year, gender, club);
             nCompetitors++;
         }
-    }
-    
-    public void addCompetitor(String name, String surname, int year, char gender, String club){
-        this.competitors[nCompetitors]=Zavodnik.getInstance(name, surname, year, gender, club);
-        nCompetitors++;
+    }*/
+
+    public void addCompetitor(String name, String surname, int year, char gender, String club) {
+        competitors.add(Zavodnik.getInstance(name, surname, year, gender, club));
     }
 
-    public void displayComp(){
-        for (int i=0;i<nCompetitors;i++){
-            System.out.println(competitors[i]);
+    public Zavodnik findFastest() {
+        int fastestTime = Integer.MAX_VALUE;
+        int fastesIndex = -1;
+        for (int i = 0; i < competitors.size(); i++) {
+            if (competitors.get(i).getTime() < fastestTime) {
+                fastestTime = competitors.get(i).getTime();
+                fastesIndex = i;
+            }
         }
-    }   
-
-    private void extendArray() {
-        Zavodnik[] longer = new Zavodnik[competitors.length+10];
-        System.arraycopy(competitors, 0,longer, 0, competitors.length);
-        competitors = longer;
+        return new Zavodnik(competitors.get(fastesIndex)); // posilam spravne data, ale data nejsou navazane
     }
     
-    public int findFastest(){
-        long fastestTime = Integer.MIN_VALUE; int fastest = -1;
-        for(int i =0;i<nCompetitors;i++){
-            if(competitors[i].getTime()<fastestTime){
-                fastest = competitors[i].getRegistracniCislo();
+        public int findFastestNumber() {
+        int fastestTime = Integer.MAX_VALUE;
+        int fastest = -1;
+        for (int i = 0; i < competitors.size(); i++) {
+            if (competitors.get(i).getTime() < fastestTime) {
+                fastestTime = competitors.get(i).getTime();
+                fastest = competitors.get(i).getRegistracniCislo();
             }
         }
         return fastest;
     }
+    
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        for (Zavodnik competitor : competitors) {
+            sb.append(competitor).append("/n");
+        }
+        return sb.toString();
+    }
+    
+    
 }
