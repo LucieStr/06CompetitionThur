@@ -14,23 +14,31 @@ public class ZavodnikTest {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Zavodnik zavodnik = new Zavodnik("Lucie", "Strnadkova", 2002, 'z', "nemam");
+        //Zavodnik zavodnik = new Zavodnik("Lucie", "Strnadkova", 2002, 'F', "nemam");
+        //System.out.println(zavodnik.getStavZavodnika());
+        //zavodnik.setStartTime(0, 1, 20);
+        //zavodnik.setFinishTime(1, 0, 0);
+        //zavodnik.setStartTime("0:01:20");
+        //zavodnik.setFinishTime("1:0:0");
+        //zavodnik.getTime();
         //System.out.println(zavodnik.toString());
-        //System.out.println(zavodnik.getJmeno()+" " + zavodnik.getPrijmeni()+" " + zavodnik.getRocnik()+" " + zavodnik.getPohlavi());
-        //System.out.println(zavodnik.getStavZavodnika());
-        zavodnik.setStartTime(0, 1, 20);
-        //System.out.println(zavodnik.getStartTime());
-        //System.out.println(zavodnik.getStavZavodnika());
-        zavodnik.setFinishTime(1, 0, 0);
-        //System.out.println(zavodnik.getFinishTime());
-        //System.out.println(zavodnik.getTime());
-        zavodnik.setStartTime("0:01:20");
-        zavodnik.setFinishTime("1:0:0");
-        zavodnik.getTime();
-        //System.out.println("Celkovy cas zavodnika je: "+ zavodnik.getStringTime());
-        //System.out.println(zavodnik.getStavZavodnika());
-        System.out.println(zavodnik.toString());
-        
+
+        Zavod jiz50 = new Zavod("jiz50");
+        jiz50.addCompetitor("Alice", "Mala", 1980, 'F', "SK Liberec");
+        jiz50.addCompetitor("Bob", "Hruby", 1969, 'M', "SK Liberec");
+        jiz50.addCompetitor("Cyril", "Drahy", 1991, 'F', "SK Jablonec");
+        System.out.println(jiz50);
+        jiz50.setStartTimeAll(9, 0, 0, 2);
+        System.out.println(jiz50);
+        jiz50.setFinishTimeOf(1, 10, 0, 0);
+        jiz50.setFinishTimeOf(2, 10, 10, 0);
+        jiz50.setFinishTimeOf(3, 10, 1, 0);
+        System.out.println(jiz50);
+        System.out.println("Nejrychlejsi: "+jiz50.findFastest());
+        jiz50.sortByTime();
+        System.out.println(jiz50);
+        jiz50.sortBySurname();
+        System.out.println(jiz50);
     }
-    
+
 }

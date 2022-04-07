@@ -1,19 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Strnadkova;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.NoSuchElementException;
 
-/**
- *
- * @author lucka
- */
 public class Zavod {
-
-    private Scanner sc = new Scanner(System.in);
 
     //data
     private String name;
@@ -45,32 +37,6 @@ public class Zavod {
     }
 
     //methods
-    /*public void addCompetitors(int number) { // bude spise v uzivatelskem rozhrani
-        String name;
-        String surname;
-        int year;
-        char gender;
-        String club;
-        int prevComp = nCompetitors;
-        for (int i = prevComp; i < number; i++) {
-            if (i == competitors.length) {
-                extendArray();
-            }
-            System.out.println("Jmeno:");
-            name = sc.next();
-            System.out.println("Prijmeni");
-            surname = sc.next();
-            System.out.println("Rocnik");
-            year = sc.nextInt();
-            System.out.println("Pohlavi");
-            gender = sc.next().charAt(0);
-            System.out.println("Klub");
-            club = sc.next();
-            this.competitors[i] = Zavodnik.getInstance(name, surname, year, gender, club);
-            nCompetitors++;
-        }
-    }*/
-
     public void addCompetitor(String name, String surname, int year, char gender, String club) {
         competitors.add(Zavodnik.getInstance(name, surname, year, gender, club));
     }
@@ -86,8 +52,8 @@ public class Zavod {
         }
         return new Zavodnik(competitors.get(fastesIndex)); // posilam spravne data, ale data nejsou navazane
     }
-    
-        public int findFastestNumber() {
+
+    public int findFastestNumber() {
         int fastestTime = Integer.MAX_VALUE;
         int fastest = -1;
         for (int i = 0; i < competitors.size(); i++) {
@@ -98,14 +64,49 @@ public class Zavod {
         }
         return fastest;
     }
-    
-    public String toString(){
+
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Zavodnik competitor : competitors) {
-            sb.append(competitor).append("/n");
+            sb.append(competitor).append("\n");
         }
         return sb.toString();
     }
-    
-    
+
+    //metody ktere nastavy cas
+    public void setStartTimeAll(int hours, int minutes, int seconds) {
+        for (Zavodnik competitor : competitors) {
+            competitor.setStartTime(hours, minutes, seconds);
+        }
+    }
+
+    public void setStartTimeAll(int hours, int minutes, int seconds, int offsetInMinutes) {
+        for (int i = 0; i < competitors.size(); i++) {
+            competitors.get(i).setStartTime(hours, minutes + i * offsetInMinutes, seconds);
+
+        }
+    }
+
+    public void setFinishTimeOf(int registrationNumber, int hours, int minutes, int seconds) {
+        Zavodnik z = findByRegistrationNumber(registrationNumber);
+        z.setFinishTime(hours, minutes, seconds);
+    }
+
+    private Zavodnik findByRegistrationNumber(int registrationNumber) {
+        for (Zavodnik competitor : competitors) {
+            if (competitor.getRegistracniCislo() == registrationNumber) {
+                return competitor;
+            }
+        }
+        throw new NoSuchElementException("Zavodnik s cislem " + registrationNumber + " neexistuje.");
+    }
+
+    public void sortByTime() { //aby arrayList setridil podle toho jak rychle bezci bezeli
+        Collections.sort(competitors);
+    }
+
+    public void sortBySurname() {
+        Comparator cbp = new ComparatorZavodnikBySurname(); 
+        Collections.sort(competitors, cbp);
+    }
 }

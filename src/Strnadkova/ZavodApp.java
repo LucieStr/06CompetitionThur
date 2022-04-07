@@ -14,7 +14,7 @@ public class ZavodApp {
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
-                    addCompetitors();
+                    addCompetitors(1);
                     break;
                 case 2:
                     zavod.displayComp();
@@ -35,7 +35,7 @@ public class ZavodApp {
         System.out.println("0 - konec");
     }
 
-    public void addCompetitors(int number) {
+    public static void addCompetitors(int number) {
         String name;
         String surname;
         int year;

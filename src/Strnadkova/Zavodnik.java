@@ -6,7 +6,7 @@ package Strnadkova;
 
 import java.time.LocalDate;
 
-public class Zavodnik {
+public class Zavodnik implements Comparable<Zavodnik> { //porovnavame zavodnika se zavodnikem
 
     private String jmeno;
     private String prijmeni;
@@ -29,6 +29,7 @@ public class Zavodnik {
         this.klub = klub;
         this.registracniCislo = pocitadlo;
         Zavodnik.pocitadlo++;
+
     }
 
     //kopie zavodnika, muzeme taky pouzit metodu clone()
@@ -39,6 +40,9 @@ public class Zavodnik {
         this.pohlavi = z.pohlavi;
         this.klub = z.klub;
         this.registracniCislo = z.registracniCislo;
+        this.startTime = z.startTime;
+        this.finishTime = z.finishTime;
+        this.time = z.time; //  z.getTime()
     }
 
     public String getKlub() {
@@ -110,6 +114,7 @@ public class Zavodnik {
 
     public void setFinishTime(int finishTime) {
         this.finishTime = finishTime;
+        getTime();
     }
 
     public void setStartTime(int hodiny, int minuty, int sekundy) {
@@ -118,6 +123,7 @@ public class Zavodnik {
 
     public void setFinishTime(int hodiny, int minuty, int sekundy) {
         this.finishTime = TimeTools.timeToSeconds(hodiny, minuty, sekundy);
+        getTime();
     }
 
     public void setStartTime(String time) {
@@ -126,9 +132,21 @@ public class Zavodnik {
 
     public void setFinishTime(String time) {
         this.finishTime = TimeTools.timeToSeconds(time);
+        getTime();
     }
 
     public String toString() {
         return String.format("%5d %10s %10s %5d %4s %10s %10s %10s", this.registracniCislo, this.jmeno, this.prijmeni, this.getVek(), this.pohlavi, TimeTools.secondsToTime(this.startTime), TimeTools.secondsToTime(this.finishTime), TimeTools.secondsToTime(this.getTime()));
     }
-}
+
+    @Override
+    public int compareTo(Zavodnik o) {
+        if (this.getTime() < o.getTime()) {
+            return -1;
+        } else if (this.getTime() > o.getTime()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }   // nebo jen return this.getTime() - o.getTime() 
+    }
