@@ -2,12 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
-package school;
+package chmelar;
 
 /**
  *
- * @author 
+ * @author tomas.chmelar
  */
 public final class TimeTools {
 
@@ -33,6 +32,6 @@ public final class TimeTools {
     
     public static int timeToSeconds(String time){
         String[] arr = time.split(":", 3);
-        return (Integer.parseInt(arr[0])*3600) + (Integer.parseInt(arr[1])*60) + (Integer.parseInt(arr[2]));
+        return Integer.parseInt(arr[0])*3600 + Integer.parseInt(arr[1])*60+60;
     }
 }
