@@ -28,7 +28,7 @@ public class Zavod {
         for (Zavodnik zavodnik : competitors) { // musime prochazet puvodni pole
             //copy.add(zavodnik); // vyrobilo by nove pole, ale ukozovalo na stejne objekty
             copy.add(new Zavodnik(zavodnik));
-        }
+        } 
         return copy;
     }
 
@@ -69,7 +69,7 @@ public class Zavod {
         StringBuilder sb = new StringBuilder();
         for (Zavodnik competitor : competitors) {
             sb.append(competitor).append("\n");
-        }
+        } 
         return sb.toString();
     }
 
@@ -83,7 +83,6 @@ public class Zavod {
     public void setStartTimeAll(int hours, int minutes, int seconds, int offsetInMinutes) {
         for (int i = 0; i < competitors.size(); i++) {
             competitors.get(i).setStartTime(hours, minutes + i * offsetInMinutes, seconds);
-
         }
     }
 

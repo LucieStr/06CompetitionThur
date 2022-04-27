@@ -12,7 +12,7 @@ public class Zavodnik implements Comparable<Zavodnik> { //porovnavame zavodnika 
     private String prijmeni;
     private int rocnik;
     private int registracniCislo;
-    private int startTime;
+    private Date startTime;
     private int finishTime;
     private int time;
     private char pohlavi;
@@ -26,7 +26,7 @@ public class Zavodnik implements Comparable<Zavodnik> { //porovnavame zavodnika 
         this.prijmeni = prijmeni;
         this.rocnik = rocnik;
         this.pohlavi = pohlavi;
-        this.klub = klub;
+        this.klub = checkClub(klub);
         this.registracniCislo = pocitadlo;
         Zavodnik.pocitadlo++;
 
@@ -43,6 +43,14 @@ public class Zavodnik implements Comparable<Zavodnik> { //porovnavame zavodnika 
         this.startTime = z.startTime;
         this.finishTime = z.finishTime;
         this.time = z.time; //  z.getTime()
+    }
+//regularni vyraz
+
+    private String checkClub(String club) { //Sokol So Sooooo
+        if (!club.matches("[A-Z][a-z]+")) { //jeden znak == [] [abs] == a nebo b nebo s 
+            throw new IllegalArgumentException("Spatne zadany nazev klubu. Klub zacina velkym pismenem a ma 1 a vice dalsich pismen.");
+        }
+        return club;
     }
 
     public String getKlub() {
@@ -72,7 +80,7 @@ public class Zavodnik implements Comparable<Zavodnik> { //porovnavame zavodnika 
     }
 
     public int getStartTime() {
-        return startTime;
+        return startTime.getTime();
     }
 
     public int getFinishTime() {
@@ -81,7 +89,7 @@ public class Zavodnik implements Comparable<Zavodnik> { //porovnavame zavodnika 
 
     public int getTime() {
         if (getStavZavodnika() == StavZavodnika.UKONCEN) {
-            time = TimeTools.timeCompare(startTime, finishTime);
+            time = TimeTools.timeCompare(startTime.getTime(), finishTime);
         }
         return time;
     }
@@ -95,9 +103,10 @@ public class Zavodnik implements Comparable<Zavodnik> { //porovnavame zavodnika 
     }
 
     public StavZavodnika getStavZavodnika() { // enum 
-        if (this.startTime == 0) {
+        if (startTime == null) {
+//if (this.startTime == 0) {
             return StavZavodnika.NEZAHAJEN; //"zavod nezahajen"
-        } else if (this.startTime != 0 && this.finishTime == 0) {
+        } else if (this.startTime != null && this.finishTime == 0) {
             return StavZavodnika.NEUKONCEN; //"zavod neukoncen"
         } else {
             return StavZavodnika.UKONCEN; //"zavod ukoncen" 
@@ -109,34 +118,44 @@ public class Zavodnik implements Comparable<Zavodnik> { //porovnavame zavodnika 
     }
 
     public void setStartTime(int startTime) {
-        this.startTime = startTime;
+        //this.startTime = startTime;
+        this.startTime = new Date(startTime);
     }
 
     public void setFinishTime(int finishTime) {
+        if (startTime == null) {
+            throw new StartTimeNotSet("Nebyl nastaven cas startu, nelze nastavit cas v cili.");
+        }
         this.finishTime = finishTime;
         getTime();
     }
 
     public void setStartTime(int hodiny, int minuty, int sekundy) {
-        this.startTime = TimeTools.timeToSeconds(hodiny, minuty, sekundy);
+        startTime.timeToSeconds(hodiny, minuty, sekundy);
     }
 
     public void setFinishTime(int hodiny, int minuty, int sekundy) {
+        if (startTime == null) {
+            throw new StartTimeNotSet("Nebyl nastaven cas startu, nelze nastavit cas v cili.");
+        }
         this.finishTime = TimeTools.timeToSeconds(hodiny, minuty, sekundy);
         getTime();
     }
 
     public void setStartTime(String time) {
-        this.startTime = TimeTools.timeToSeconds(time);
+        startTime.timeToSeconds(time);
     }
 
     public void setFinishTime(String time) {
+        if (startTime == null) {
+            throw new StartTimeNotSet("Nebyl nastaven cas startu, nelze nastavit cas v cili.");
+        }
         this.finishTime = TimeTools.timeToSeconds(time);
         getTime();
     }
 
     public String toString() {
-        return String.format("%5d %10s %10s %5d %4s %10s %10s %10s", this.registracniCislo, this.jmeno, this.prijmeni, this.getVek(), this.pohlavi, TimeTools.secondsToTime(this.startTime), TimeTools.secondsToTime(this.finishTime), TimeTools.secondsToTime(this.getTime()));
+        return String.format("%5d %10s %10s %5d %4s %10s %10s %10s", this.registracniCislo, this.jmeno, this.prijmeni, this.getVek(), this.pohlavi, this.startTime.secondsToTime(time), TimeTools.secondsToTime(this.finishTime), TimeTools.secondsToTime(this.getTime()));
     }
 
     @Override
@@ -149,4 +168,4 @@ public class Zavodnik implements Comparable<Zavodnik> { //porovnavame zavodnika 
             return 0;
         }
     }   // nebo jen return this.getTime() - o.getTime() 
-    }
+}

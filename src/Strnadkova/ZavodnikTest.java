@@ -4,6 +4,8 @@
  */
 package Strnadkova;
 
+import javax.security.auth.kerberos.EncryptionKey;
+
 /**
  *
  * @author lucka
@@ -22,23 +24,26 @@ public class ZavodnikTest {
         //zavodnik.setFinishTime("1:0:0");
         //zavodnik.getTime();
         //System.out.println(zavodnik.toString());
+        
+        //odchyceni vyjimky
+        try {
+            Zavod jiz50 = new Zavod("jiz50");
+            jiz50.addCompetitor("Alice", "Mala", 1980, 'F', "SK Liberec");
+            jiz50.addCompetitor("Bob", "Hruby", 1969, 'M', "SK Liberec");
+            jiz50.addCompetitor("Cyril", "Drahy", 1991, 'F', "SK Jablonec");
+            System.out.println(jiz50);
+            //jiz50.setStartTimeAll(9, 0, 0, 2);
+            System.out.println(jiz50);
+            jiz50.setFinishTimeOf(1, 10, 0, 0);
+            jiz50.setFinishTimeOf(2, 10, 10, 0);
+            jiz50.setFinishTimeOf(3, 10, 1, 0);
+            System.out.println(jiz50);
+        } catch (StartTimeNotSet e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Chyba");
+        }
 
-        Zavod jiz50 = new Zavod("jiz50");
-        jiz50.addCompetitor("Alice", "Mala", 1980, 'F', "SK Liberec");
-        jiz50.addCompetitor("Bob", "Hruby", 1969, 'M', "SK Liberec");
-        jiz50.addCompetitor("Cyril", "Drahy", 1991, 'F', "SK Jablonec");
-        System.out.println(jiz50);
-        jiz50.setStartTimeAll(9, 0, 0, 2);
-        System.out.println(jiz50);
-        jiz50.setFinishTimeOf(1, 10, 0, 0);
-        jiz50.setFinishTimeOf(2, 10, 10, 0);
-        jiz50.setFinishTimeOf(3, 10, 1, 0);
-        System.out.println(jiz50);
-        System.out.println("Nejrychlejsi: "+jiz50.findFastest());
-        jiz50.sortByTime();
-        System.out.println(jiz50);
-        jiz50.sortBySurname();
-        System.out.println(jiz50);
     }
 
 }
